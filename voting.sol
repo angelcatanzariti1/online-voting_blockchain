@@ -36,4 +36,25 @@ contract voting{
         candidates.push(_name);
     }
 
+    function ViewCandidates() public view returns(string[] memory){
+        return candidates;
+    }
+
+    // VOTING -----------------------------------------------
+    function vote(string memory _candidate) public{
+        // store voter's hash in array to avoid multiple votes per address
+        bytes32 votersHash = keccak256(abi.encodePacked(msg.sender));
+
+        for(uint i=0; i < voters.length; i++){
+            require(voters[i] != votersHash, "You've already voted!");
+        }
+
+        voters.push(votersHash);
+        candidateVotes[_candidate] += 1;
+    }
+
+    // VIEW VOTES -------------------------------------------
+    function ViewVotes(string memory _candidate) public view returns(uint){
+        return(candidateVotes[_candidate]);
+    }
 }
