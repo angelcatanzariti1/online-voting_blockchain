@@ -92,11 +92,22 @@ contract voting{
     // VIEW WINER -----------------------------------------
     function Winner() public view returns(string memory){
         string memory winner = candidates[0];
+        bool tie;
 
-        for(uint i=0; i < candidates.length; i++){
+        for(uint i=1; i < candidates.length; i++){
             if(candidateVotes[candidates[i]] > candidateVotes[winner]){
                 winner = candidates[i];
+                tie = false;
             }
+            else{
+                if(candidateVotes[candidates[i]] == candidateVotes[winner]){
+                    tie = true;
+                }
+            }
+        }
+
+        if(tie){
+            winner = "It's a tie!";
         }
         return(winner); 
     }
