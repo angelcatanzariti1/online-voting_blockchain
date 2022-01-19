@@ -69,7 +69,7 @@ contract voting{
         return(results);
     }
 
-    // AUX --------------------------------------------------
+    // AUX (uint to string) ----------------------------------
     function uint2str(uint _i) internal pure returns (string memory _uintAsString) {
         if (_i == 0) {
             return "0";
@@ -88,4 +88,17 @@ contract voting{
         }
         return string(bstr);
     }
+
+    // VIEW WINER -----------------------------------------
+    function Winner() public view returns(string memory){
+        string memory winner = candidates[0];
+
+        for(uint i=0; i < candidates.length; i++){
+            if(candidateVotes[candidates[i]] > candidateVotes[winner]){
+                winner = candidates[i];
+            }
+        }
+        return(winner); 
+    }
+
 }
